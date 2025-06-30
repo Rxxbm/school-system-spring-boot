@@ -25,8 +25,10 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/pessoa/**").permitAll()
                         .requestMatchers("/pessoa").permitAll()
-                        .requestMatchers("/aluno/**").hasAuthority("ALUNO")
-                        .requestMatchers("/professor/**").hasAuthority("PROFESSOR")
+                        .requestMatchers("/aluno").permitAll()
+                        .requestMatchers("/aluno/**").permitAll()
+                        .requestMatchers("/professor/**").permitAll()
+                        .requestMatchers("/professor").permitAll()
                         .requestMatchers("/me").authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

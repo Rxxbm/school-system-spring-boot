@@ -21,5 +21,11 @@ public class ValidationExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
+
+    // Você pode adicionar outros handlers personalizados:
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleGeneric(RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }
 

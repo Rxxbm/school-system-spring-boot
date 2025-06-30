@@ -1,4 +1,5 @@
 package com.rubem.security;
+import com.rubem.enums.Cargo;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateToken(String email, String role) {
+    public String generateToken(String email, Cargo role) {
         return Jwts.builder()
                 .setSubject(email)
                 .claim("role", role)

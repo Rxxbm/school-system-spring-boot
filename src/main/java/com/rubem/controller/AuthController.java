@@ -2,6 +2,7 @@ package com.rubem.controller;
 
 import com.rubem.dto.LoginResponseDTO;
 import com.rubem.dto.PessoaDTO;
+import com.rubem.enums.Cargo;
 import com.rubem.model.Pessoa;
 import com.rubem.repository.PessoaRepository;
 import com.rubem.security.JwtService;
@@ -40,13 +41,14 @@ public class AuthController {
             throw new RuntimeException("Senha inválida");
         }
 
-        String role = "USER";
+        Cargo role = Cargo.GERENTE;
 
         return ResponseEntity.ok(new LoginResponseDTO(jwtService.generateToken(pessoa.getEmail(), role)));
     }
 
     @PostMapping(value = "/register", consumes = "application/json")
     public ResponseEntity<Pessoa> register(@RequestBody @Valid PessoaDTO dto){
+
         Pessoa newPessoa = new Pessoa(dto.getEmail(), dto.getSenha());
         return ResponseEntity.status(201).body(pessoaService.save(newPessoa));
     }
