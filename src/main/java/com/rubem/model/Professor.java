@@ -1,5 +1,6 @@
 package com.rubem.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rubem.enums.Lingua;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
@@ -22,8 +23,17 @@ public class Professor extends Pessoa{
     @ElementCollection
     private List<Lingua> linguas;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "professor")
-    private Set<Aula> aulas = new HashSet<>();
+    private Set<Turma> turmas = new HashSet<>();
+
+    public Set<Turma> getTurmas() {
+        return turmas;
+    }
+
+    public void setTurmas(Set<Turma> turmas) {
+        this.turmas = turmas;
+    }
 
     public Professor(String email, String senha, String matricula, String nome, String endereco, String telefone, BigDecimal valorHora, List<Lingua> linguas) {
         super(email, senha);
@@ -83,21 +93,15 @@ public class Professor extends Pessoa{
         this.linguas = linguas;
     }
 
-    public Set<Aula> getAulas() {
-        return aulas;
-    }
 
-    public void setAulas(Set<Aula> aulas) {
-        this.aulas = aulas;
-    }
-
-    public Professor(String matricula, String nome, String endereco, String telefone, BigDecimal valorHora, List<Lingua> linguas, Set<Aula> aulas) {
+    public Professor(String matricula, String nome, String endereco, String telefone, BigDecimal valorHora, List<Lingua> linguas, Set<Turma> turmas) {
         this.matricula = matricula;
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
         this.valorHora = valorHora;
         this.linguas = linguas;
+        this.turmas = turmas;
     }
 
 

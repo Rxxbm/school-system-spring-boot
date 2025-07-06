@@ -23,9 +23,7 @@ public class Aula {
     private LocalTime horaInicio;
     private LocalTime horaFim;
 
-    @ManyToOne
-    @JoinColumn(name = "professor_id")
-    private Professor professor;
+
 
     private boolean realizada = false;
 

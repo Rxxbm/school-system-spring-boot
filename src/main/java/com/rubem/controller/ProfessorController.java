@@ -34,13 +34,13 @@ public class ProfessorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Professor>> getAll() {
+    public ResponseEntity<List<ProfessorResponseDTO>> getAll() {
         return ResponseEntity.ok(service.listAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Professor> getById(@PathVariable Long id) {
-        Professor professor = service.findById(id);
+    public ResponseEntity<ProfessorResponseDTO> getById(@PathVariable Long id) {
+        ProfessorResponseDTO professor = service.findById(id);
         return ResponseEntity.ok(professor);
     }
 
@@ -73,14 +73,14 @@ public class ProfessorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Professor> update(@PathVariable Long id, @RequestBody @Valid ProfessorDTO dto) {
-        Professor professorAtualizado = service.update(id, dto);
+    public ResponseEntity<ProfessorResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ProfessorDTO dto) {
+        ProfessorResponseDTO professorAtualizado = service.update(id, dto);
         return ResponseEntity.ok(professorAtualizado);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Professor> patch(@PathVariable Long id, @RequestBody ProfessorPatchDTO dto) {
-        Professor professorAtualizado = service.partialUpdate(id, dto);
+    public ResponseEntity<ProfessorResponseDTO> patch(@PathVariable Long id, @RequestBody ProfessorPatchDTO dto) {
+        ProfessorResponseDTO professorAtualizado = service.partialUpdate(id, dto);
         return ResponseEntity.ok(professorAtualizado);
     }
 }

@@ -16,8 +16,8 @@ public class Aluno extends Pessoa{
     private String telefone;
 
 
-    @ManyToMany(mappedBy = "alunos")
-    private Set<Turma> turmas = new HashSet<>();
+    @OneToMany(mappedBy = "aluno")
+    private Set<Matricula> turmas = new HashSet<>();
 
     public Aluno(String matricula, String nome, String endereco, String telefone) {
         this.matricula = matricula;
@@ -28,6 +28,14 @@ public class Aluno extends Pessoa{
 
     public Aluno(String email, String senha, String matricula, String nome, String endereco, String telefone) {
         super(email, senha);
+        this.matricula = matricula;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefone = telefone;
+    }
+
+    public Aluno(Long id, String email, String senha, String matricula, String nome, String endereco, String telefone) {
+        super(id, email, senha);
         this.matricula = matricula;
         this.nome = nome;
         this.endereco = endereco;
@@ -70,11 +78,11 @@ public class Aluno extends Pessoa{
         this.telefone = telefone;
     }
 
-    public Set<Turma> getTurmas() {
+    public Set<Matricula> getTurmas() {
         return turmas;
     }
 
-    public void setTurmas(Set<Turma> turmas) {
+    public void setTurmas(Set<Matricula> turmas) {
         this.turmas = turmas;
     }
 }

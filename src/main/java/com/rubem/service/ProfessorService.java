@@ -2,6 +2,7 @@ package com.rubem.service;
 
 import com.rubem.dto.ProfessorDTO;
 import com.rubem.dto.ProfessorPatchDTO;
+import com.rubem.dto.ProfessorResponseDTO;
 import com.rubem.model.Professor;
 import com.rubem.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfessorService {
@@ -22,12 +24,15 @@ public class ProfessorService {
         this.repo = repo;
     }
 
-    public List<Professor> listAll() {
-        return repo.findAll();
+    public List<ProfessorResponseDTO> listAll() {
+        return repo.findAll().stream()
+                .map(this::convertToResponseDTO)
+                .collect(Collectors.toList());
     }
 
-    public Professor findById(Long id){
-        return repo.findById(id).orElse(null);
+    public ProfessorResponseDTO findById(Long id){
+        Professor prof = repo.findById(id).orElse(null);
+        return this.convertToResponseDTO(prof);
     }
 
 
@@ -49,8 +54,8 @@ public class ProfessorService {
         repo.deleteById(id);
     }
 
-    public Professor update(Long id, ProfessorDTO dto) {
-        Professor professor = findById(id); // já lança exceção se não encontrar
+    public ProfessorResponseDTO update(Long id, ProfessorDTO dto) {
+        Professor professor = repo.findById(id).orElse(null); // já lança exceção se não encontrar
 
         this.validarEmailMatriculaUnico(dto.getEmail(), dto.getMatricula());
 
@@ -61,11 +66,11 @@ public class ProfessorService {
         professor.setTelefone(dto.getTelefone());
         professor.setSenha(passwordEncoder.encode(dto.getSenha()));
 
-        return repo.save(professor);
+        return this.convertToResponseDTO(repo.save(professor));
     }
 
-    public Professor partialUpdate(Long id, ProfessorPatchDTO dto) {
-        Professor professor = findById(id);
+    public ProfessorResponseDTO partialUpdate(Long id, ProfessorPatchDTO dto) {
+        Professor professor = repo.findById(id).orElse(null); // já lança exceção se não encontrar
 
         if (dto.getNome() != null) professor.setNome(dto.getNome());
         if (dto.getEndereco() != null) professor.setEndereco(dto.getEndereco());
@@ -74,6 +79,11 @@ public class ProfessorService {
         if (dto.getValorHora() != null) professor.setValorHora(dto.getValorHora());
         if (dto.getLinguas() != null) professor.setLinguas(dto.getLinguas());
 
-        return repo.save(professor);
+        return this.convertToResponseDTO(repo.save(professor));
+    }
+
+    ProfessorResponseDTO convertToResponseDTO(Professor prof){
+        ProfessorResponseDTO dto = new ProfessorResponseDTO(prof);
+        return dto;
     }
 }

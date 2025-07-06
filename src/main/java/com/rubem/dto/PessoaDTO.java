@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class PessoaDTO {
+    private Long id;
+
     @Email
     @NotBlank(message = "O email é obrigatório")
     private String email;
@@ -21,6 +23,12 @@ public class PessoaDTO {
         this.senha = senha;
     }
 
+    public PessoaDTO(Long id, String email, String senha) {
+        this.email = email;
+        this.senha = senha;
+        this.id = id;
+    }
+
     // Getters e Setters
     public String getEmail() {
         return email;
@@ -36,5 +44,13 @@ public class PessoaDTO {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

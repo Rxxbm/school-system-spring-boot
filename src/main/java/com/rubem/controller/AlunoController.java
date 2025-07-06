@@ -35,7 +35,7 @@ public class AlunoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Aluno>> getAll() {
+    public ResponseEntity<List<AlunoDTO>> getAll() {
         return ResponseEntity.ok(service.listAll());
     }
 

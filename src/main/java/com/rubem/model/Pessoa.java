@@ -27,6 +27,13 @@ public class Pessoa {
         this.senha = senha;
     }
 
+    public Pessoa(Long id, String email, String senha){
+        this.id = id;
+        this.senha = senha;
+        this.email = email;
+
+    }
+
     // Getters e setters
 
     public Long getId() {

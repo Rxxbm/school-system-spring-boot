@@ -16,6 +16,14 @@ public class AlunoDTO extends PessoaDTO{
     @NotBlank
     private String matricula;
 
+    public AlunoDTO(Long id, String email, String senha, String nome, String endereco, String telefone, String matricula) {
+        super(id, email, senha);
+        this.matricula = matricula;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefone = telefone;
+    }
+
     public String getNome() {
         return nome;
     }
