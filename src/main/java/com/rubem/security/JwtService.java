@@ -36,19 +36,34 @@ public class JwtService {
                 .getSubject();
     }
 
-    public String extractRole(String token) {
-        return Jwts.parserBuilder()
+
+    public Cargo extractRole(String token) {
+        String roleName = Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
-                .get("role", String.class);
+                .get("role", String.class); // Extrai como String
+
+        // Converte manualmente para o enum
+        try {
+            return Cargo.valueOf(roleName);
+        } catch (IllegalArgumentException e) {
+            throw new JwtException("Cargo inválido no token: " + roleName);
+        }
     }
 
 
     public boolean isTokenValid(String token) {
         try {
-            extractEmail(token);
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            // Verifica se a role existe no enum
+            Cargo.valueOf(claims.get("role", String.class));
             return true;
         } catch (Exception e) {
             return false;

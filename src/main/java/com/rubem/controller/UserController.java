@@ -2,6 +2,7 @@ package com.rubem.controller;
 
 
 import com.rubem.dto.MeResponseDTO;
+import com.rubem.enums.Cargo;
 import com.rubem.security.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class UserController {
 
         String token = authHeader.substring(7);
         String email = jwtService.extractEmail(token);
-        String role = jwtService.extractRole(token);
+        Cargo role = jwtService.extractRole(token);
 
-        return new MeResponseDTO(email, role);
+        return new MeResponseDTO(email, role.toString());
     }
 }

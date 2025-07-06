@@ -29,6 +29,10 @@ public class Turma {
     @Positive
     private BigDecimal preco;
 
+    @ManyToOne
+    @JoinColumn(name = "professor_id")
+    private Professor professor;
+
     @ManyToMany
     @JoinTable(name = "turma_aluno",
             joinColumns = @JoinColumn(name = "turma_id"),
