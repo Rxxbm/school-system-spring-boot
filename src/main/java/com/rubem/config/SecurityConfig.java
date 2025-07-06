@@ -29,6 +29,8 @@ public class SecurityConfig {
                         .requestMatchers("/aluno/**").permitAll()
                         .requestMatchers("/professor/**").permitAll()
                         .requestMatchers("/professor").permitAll()
+                        .requestMatchers("/funcionario/**").permitAll()
+                        .requestMatchers("/funcionario").permitAll()
                         .requestMatchers("/me").authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

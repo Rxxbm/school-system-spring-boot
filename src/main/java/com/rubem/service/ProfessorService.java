@@ -18,7 +18,6 @@ public class ProfessorService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
     public ProfessorService (ProfessorRepository repo){
         this.repo = repo;
     }
