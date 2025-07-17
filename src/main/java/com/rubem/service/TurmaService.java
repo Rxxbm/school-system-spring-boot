@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class TurmaService {
 
+
     private final TurmaRepository turmaRepository;
     private final ProfessorRepository professorRepository;
 
@@ -48,6 +49,7 @@ public class TurmaService {
         turma.setLingua(turmaDTO.getLingua());
         turma.setNivel(turmaDTO.getNivel());
         turma.setPreco(turmaDTO.getPreco());
+        turma.setValorArrecadado(turmaDTO.getValorArrecadado());
         turma.setProfessor(professor);
 
         Turma savedTurma = turmaRepository.save(turma);
@@ -103,6 +105,7 @@ public class TurmaService {
         dto.setPreco(turma.getPreco());
         dto.setProfessorId(turma.getProfessor().getId());
         dto.setProfessorNome(turma.getProfessor().getNome());
+        dto.setValorArrecadado(turma.getValorArrecadado());
         return dto;
     }
 
@@ -180,7 +183,7 @@ public class TurmaService {
         }
 
         if(!turma.getDataTermino().isBefore(LocalDate.now())){
-            throw new RuntimeException("A turma ainda não foi finalizada");
+           // throw new RuntimeException("A turma ainda não foi finalizada");
         }
 
         // Encontra a matrícula específica
@@ -193,5 +196,21 @@ public class TurmaService {
         matriculaRepository.save(matricula);
     }
 
+    @Transactional
+    public void registrarPagamento(Long turmaId, BigDecimal valor) {
+        Turma turma = turmaRepository.findById(turmaId)
+                .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
 
+        if (valor.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("Valor do pagamento deve ser positivo");
+        }
+
+        BigDecimal novoValorArrecadado = turma.getValorArrecadado().add(valor);
+        if (novoValorArrecadado.compareTo(turma.getPreco()) > 0) {
+            throw new RuntimeException("Valor excede o total da turma");
+        }
+
+        turma.setValorArrecadado(novoValorArrecadado);
+        turmaRepository.save(turma);
+    }
 }

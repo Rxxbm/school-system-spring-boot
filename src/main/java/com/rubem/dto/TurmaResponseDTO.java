@@ -17,6 +17,7 @@ public class TurmaResponseDTO {
     private BigDecimal preco;
     private Long professorId;
     private String professorNome;
+    private BigDecimal valorArrecadado;
 
     // Getters e Setters
 
@@ -31,6 +32,14 @@ public class TurmaResponseDTO {
         this.preco = preco;
         this.professorId = professorId;
         this.professorNome = professorNome;
+    }
+
+    public BigDecimal getValorArrecadado() {
+        return valorArrecadado;
+    }
+
+    public void setValorArrecadado(BigDecimal valorArrecadado) {
+        this.valorArrecadado = valorArrecadado;
     }
 
     public Long getId() {

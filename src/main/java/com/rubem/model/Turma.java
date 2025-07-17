@@ -21,6 +21,8 @@ public class Turma {
     private LocalDate dataInicio;
     private LocalDate dataTermino;
 
+    private BigDecimal valorArrecadado;
+
     @Enumerated(EnumType.STRING)
     private Lingua lingua;
 
@@ -53,6 +55,14 @@ public class Turma {
         this.professor = professor;
         this.matriculas = matriculas;
         this.aulas = aulas;
+    }
+
+    public BigDecimal getValorArrecadado() {
+        return valorArrecadado;
+    }
+
+    public void setValorArrecadado(BigDecimal valorArrecadado) {
+        this.valorArrecadado = valorArrecadado;
     }
 
     public Long getId() {

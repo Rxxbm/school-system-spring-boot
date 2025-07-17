@@ -2,11 +2,12 @@ package com.rubem.controller;
 
 import com.rubem.dto.*;
 import com.rubem.enums.Cargo;
-import com.rubem.model.Aluno;
+import com.rubem.model.Gasto;
 import com.rubem.model.Professor;
 import com.rubem.repository.ProfessorRepository;
 import com.rubem.security.JwtService;
 import com.rubem.service.ProfessorService;
+import com.rubem.service.RelatorioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,9 @@ import java.util.List;
 public class ProfessorController {
     @Autowired
     private ProfessorRepository professorRepository;
+
+    @Autowired
+    private RelatorioService relatorioService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -82,5 +86,15 @@ public class ProfessorController {
     public ResponseEntity<ProfessorResponseDTO> patch(@PathVariable Long id, @RequestBody ProfessorPatchDTO dto) {
         ProfessorResponseDTO professorAtualizado = service.partialUpdate(id, dto);
         return ResponseEntity.ok(professorAtualizado);
+    }
+
+    @GetMapping("/professores/{id}/gastos")
+    public ResponseEntity<List<Gasto>> gastosPorProfessor(
+            @PathVariable Long id,
+            @RequestParam(required = false) Integer mes,
+            @RequestParam(required = false) Integer ano) {
+
+        List<Gasto> gastos = relatorioService.consultarGastosPorProfessor(id, mes, ano);
+        return ResponseEntity.ok(gastos);
     }
 }

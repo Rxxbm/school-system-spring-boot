@@ -36,6 +36,10 @@ public class SecurityConfig {
                         .requestMatchers("/professor").permitAll()
                         .requestMatchers("/funcionario/**").permitAll()
                         .requestMatchers("/funcionario").permitAll()
+                        .requestMatchers("/aulas/**").permitAll()
+                        .requestMatchers("/aulas").permitAll()
+                        .requestMatchers("/relatorios").permitAll()
+                        .requestMatchers("/relatorios/**").permitAll()
                         .requestMatchers("/me").authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

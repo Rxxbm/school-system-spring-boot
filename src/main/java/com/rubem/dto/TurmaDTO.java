@@ -19,6 +19,10 @@ public class TurmaDTO {
     private LocalDate dataTermino;
 
     @NotNull
+    @Positive
+    private BigDecimal valorArrecadado;
+
+    @NotNull
     private Lingua lingua;
 
     @NotNull
@@ -28,16 +32,26 @@ public class TurmaDTO {
     @NotNull
     private BigDecimal preco;
 
+
     @NotNull
     private Long professorId;
 
-    public TurmaDTO(LocalDate dataInicio, LocalDate dataTermino, Lingua lingua, Nivel nivel, BigDecimal preco, Long professorId) {
+    public TurmaDTO(LocalDate dataInicio, LocalDate dataTermino, Lingua lingua, Nivel nivel, BigDecimal preco, Long professorId, BigDecimal valorArrecadado) {
         this.dataInicio = dataInicio;
         this.dataTermino = dataTermino;
         this.lingua = lingua;
         this.nivel = nivel;
         this.preco = preco;
         this.professorId = professorId;
+        this.valorArrecadado = valorArrecadado;
+    }
+
+    public BigDecimal getValorArrecadado() {
+        return valorArrecadado;
+    }
+
+    public void setValorArrecadado(BigDecimal valorArrecadado) {
+        this.valorArrecadado = valorArrecadado;
     }
 
     public LocalDate getDataInicio() {

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -101,5 +102,17 @@ public class TurmaController {
 
         turmaService.atribuirNotaFinal(professor.getId(), dto);
         return ResponseEntity.ok("Atribuição de nota realizada com sucesso");
+    }
+
+    @PostMapping("/{id}/pagamentos")
+    public ResponseEntity<?> registrarPagamento(
+            @PathVariable Long id,
+            @RequestParam BigDecimal valor) {
+        try {
+            turmaService.registrarPagamento(id, valor);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

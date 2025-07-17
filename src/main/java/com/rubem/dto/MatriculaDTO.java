@@ -17,6 +17,8 @@ public class MatriculaDTO {
     @Positive
     private BigDecimal notaFinal;
 
+
+
     public MatriculaDTO(Long aluno, Long turma, BigDecimal notaFinal) {
         this.aluno = aluno;
         this.turma = turma;
